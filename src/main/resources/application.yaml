@@ -1,0 +1,25 @@
+spring:
+#  数据库配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/superblogdb?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
+    username: root
+    password: cycddl2001
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#  配置
+  jpa:
+    show-sql: false
+    open-in-view: false
+#  redis配置
+  redis:
+    host: 127.0.0.1
+    database: 0
+#  servlet配置
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 256MB
+      max-request-size: 10GB
+server:
+  port: 8081
+
+
