@@ -3,6 +3,9 @@ package com.example.superblog;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * @author 17804
+ */
 @SpringBootApplication
 public class SuperBlogApplication {
 

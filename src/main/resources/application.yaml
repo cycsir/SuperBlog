@@ -10,16 +10,17 @@ spring:
     show-sql: false
     open-in-view: false
 #  redis配置
-  redis:
-    host: 127.0.0.1
-    database: 0
+
 #  servlet配置
   servlet:
     multipart:
       enabled: true
       max-file-size: 256MB
       max-request-size: 10GB
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 server:
-  port: 8081
+  port: 8084
 
 

@@ -13,5 +13,5 @@ public interface UserMapper extends CrudRepository<User, Integer> {
     /**
      * 通过用户名查询用户
      */
-    User findByUsername(String username);
+    List<User> findByUsername(String name);
 }
