@@ -1,9 +1,9 @@
 spring:
 #  数据库配置
   datasource:
-    url: jdbc:mysql://localhost:3306/superblogdb?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/superblog?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
     username: root
-    password: cycddl2001
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
 #  配置
   jpa:

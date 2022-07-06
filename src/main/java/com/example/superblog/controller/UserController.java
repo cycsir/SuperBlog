@@ -24,4 +24,9 @@ public class UserController {
     public ResponseVO login(@RequestBody LoginVO loginVO) {
         return userService.login(loginVO);
     }
+
+    @PostMapping("register")
+    public ResponseVO register(@RequestBody LoginVO loginVO) {
+        return userService.register(loginVO);
+    }
 }

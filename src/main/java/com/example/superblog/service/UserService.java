@@ -35,4 +35,16 @@ public class UserService {
         }
         return ResponseVO.buildSuccess("登录成功");
     }
+
+    public ResponseVO register(LoginVO loginVO) {
+        List<User> users = userMapper.findByUsername(loginVO.getUsername());
+        if (!users.isEmpty()) {
+            return ResponseVO.buildFail(ResponseCode.ERROR.getCode(), "用户名已存在");
+        }
+        User user = new User();
+        user.setUsername(loginVO.getUsername());
+        user.setPassword(loginVO.getPassword());
+        userMapper.save(user);
+        return ResponseVO.buildSuccess("注册成功");
+    }
 }
