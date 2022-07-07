@@ -20,7 +20,14 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+
 server:
   port: 8084
 
-
+#  阿里云服务配置
+aliyun:
+  oss:
+    bucketName: "test-cyc"
+    endPoint: "oss-cn-beijing.aliyuncs.com"
+    accessKeyId: "LTAI5tKrgVhpnarVn8gWdv8N"
+    accessKeySecret: "5fOsLEiQ9B3timfaFznKtgsIT4jvf6"
