@@ -17,7 +17,7 @@ import java.util.Date;
 public class FileService {
     private final FileMapper fileMapper;
 
-    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     private final String rootPath = "superblog/";
     private final AliyunOssUtil aliyunOssUtil;
