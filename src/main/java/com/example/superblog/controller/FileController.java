@@ -25,4 +25,9 @@ public class FileController {
     public ResponseVO createBlog(Integer userId, MultipartFile blog){
         return fileService.createBlog(userId, blog);
     }
+
+    @PostMapping("/blog/update")
+    public ResponseVO updateBlog(Integer blogId, MultipartFile blog){
+        return fileService.updateBlog(blogId, blog);
+    }
 }
