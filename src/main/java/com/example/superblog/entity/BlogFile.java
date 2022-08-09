@@ -30,6 +30,9 @@ public class BlogFile {
     @Column(name = "create_time")
     private String createTime;
 
+    @Column(name = "update_time")
+    private String updateTime;
+
     @Column(name = "url")
     private String url;
 

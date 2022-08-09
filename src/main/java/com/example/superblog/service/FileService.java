@@ -18,7 +18,7 @@ import java.util.Optional;
 public class FileService {
     private final FileMapper fileMapper;
 
-    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd/HH:mm:ss");
 
     private final String rootPath = "superblog/";
     private final AliyunOssUtil aliyunOssUtil;
@@ -44,10 +44,11 @@ public class FileService {
         blogFile1.setIsPicture(0);
         blogFile1.setUserId(userId);
         blogFile1.setCreateTime(dateStr);
+        blogFile1.setUpdateTime(dateStr);
         blogFile1.setType(type);
         blogFile1.setUrl(url);
         fileMapper.save(blogFile1);
-        return ResponseVO.buildSuccess("create blog success");
+        return ResponseVO.buildSuccess("create blog success", aliyunOssUtil.getPrefix()+url);
     }
 
 //    public ResponseVO getBlogById(Integer BlogId){
@@ -63,6 +64,7 @@ public class FileService {
 //    }
 
     public ResponseVO updateBlog(Integer blogId, MultipartFile newBlog){
+        String dateStr = sdf.format(new Date());
         Optional<BlogFile> file = fileMapper.findById(blogId);
         BlogFile oldBlog = new BlogFile();
         if(!file.isPresent() || file.get().getIsPicture() == 1){
@@ -83,12 +85,46 @@ public class FileService {
 
         // 更新数据库中的url为新的url
         oldBlog.setUrl(url);
+        oldBlog.setUpdateTime(dateStr);
         fileMapper.save(oldBlog);
 
-        return ResponseVO.buildSuccess("update blog success");
+        return ResponseVO.buildSuccess("update blog success", aliyunOssUtil.getPrefix()+url);
     }
 
 
+    public ResponseVO uploadAssets(Integer blogId, MultipartFile assets) {
+        String dateStr = sdf.format(new Date());
+        Optional<BlogFile> file = fileMapper.findById(blogId);
+        BlogFile oldBlog = new BlogFile();
+        if(!file.isPresent() || file.get().getIsPicture() == 1){
+            return ResponseVO.buildFail(ResponseCode.ERROR.getCode(), "blog not found");
+        }
+        oldBlog = file.get();
 
+        // 获取目录路径
+        String oldUrl = oldBlog.getUrl();
+        String path = oldUrl.substring(0, oldUrl.lastIndexOf('/'));
 
+        // 将新版本的文件上传到旧版本文件目录下
+        File blogFile = AliyunOssUtil.multipartFile2File(assets);
+        String url = aliyunOssUtil.upload(blogFile, path);
+        if(url.equals("")){
+            return ResponseVO.buildFail(ResponseCode.ERROR.getCode(), "upload assets failed");
+        }
+
+        String fileName = blogFile.getName();
+        String type = AliyunOssUtil.getContentType(fileName.substring(fileName.lastIndexOf('.')));
+        BlogFile blogFile1 = new BlogFile();
+        blogFile1.setFilename(fileName);
+        blogFile1.setIsPicture(0);
+        blogFile1.setUserId(oldBlog.getUserId());
+        blogFile1.setCreateTime(dateStr);
+        blogFile1.setUpdateTime(dateStr);
+        blogFile1.setType(type);
+        blogFile1.setUrl(url);
+        blogFile1.setParent(blogId);
+        fileMapper.save(blogFile1);
+
+        return ResponseVO.buildSuccess("upload assets success", aliyunOssUtil.getPrefix()+url);
+    }
 }

@@ -30,4 +30,7 @@ public class FileController {
     public ResponseVO updateBlog(Integer blogId, MultipartFile blog){
         return fileService.updateBlog(blogId, blog);
     }
+
+    @PostMapping("/assets/upload")
+    public ResponseVO uploadPic(Integer blogId, MultipartFile assets){return fileService.uploadAssets(blogId, assets);}
 }

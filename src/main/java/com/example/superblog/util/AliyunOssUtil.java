@@ -79,6 +79,12 @@ public class AliyunOssUtil {
         return "application/octet-stream";
     }
 
+
+    public String getPrefix(){
+        String endpoint = this.ossConstantProperties.getEndPoint();
+        String bucketName = this.ossConstantProperties.getBucketName();
+        return "https://" + bucketName + "." + endpoint + "/";
+    }
     //简单的文件上传测试
     //文件上传接口需要的参数是被上传文件的本地绝对地址
     //文件上传返回值应该是在bucket中的位置信息。
@@ -88,6 +94,8 @@ public class AliyunOssUtil {
         String accessKeyId = this.ossConstantProperties.getAccessKeyId();
         String accessKeySecret = this.ossConstantProperties.getAccessKeySecret();
         String bucketName = this.ossConstantProperties.getBucketName();
+
+        String prefix = "https://" + bucketName + "." + endpoint + "/";
         //上传到阿里云的位置和项目名称，默认从bucket开始。
         //    String objectName="文件/test01";
         //本地被上传文件的地址，要求为绝对路路径
